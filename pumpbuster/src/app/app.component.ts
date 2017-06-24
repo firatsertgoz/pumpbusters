@@ -8,8 +8,8 @@ import {CurrencyPair} from './CurrencyPair'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
- 
-  type 
+
+  type
   exchangeName
   fromCurrency
   toCurrency
@@ -24,29 +24,33 @@ export class AppComponent  {
   maskInt
   response
   globals
+  currencySubs = []
   currencyMap = {}
- 
+
  ngOnInit(){
-     //called after the constructor and called  after the first ngOnChanges() 
+     //called after the constructor and called  after the first ngOnChanges()
 
      this.statics.currencies.forEach((currencyName, index )=> {
         this.currencyMap[currencyName] = new CurrencyPair(currencyName)
+        this.currencySubs.push(`2~BitTrex~${currencyName}~BTC`)
      });
-  
       var socket = socketIo("wss://streamer.cryptocompare.com");
-      socket.emit('SubAdd', { subs: ['2~BitTrex~ANS~BTC', '2~BitTrex~LSK~BTC'] } );
+      socket.emit('SubAdd', { subs: this.currencySubs } );
       socket.on("m", (message) => {
         this.response = message
         var arr: Array<string> = message.split('~')
         if (arr.length > 1){
-        
+
         this.statics.currencies.forEach((currencyName, index) => {
           if (currencyName === arr[2]){
+            console.log("New Currency Name = " + currencyName)
+            console.log("Upcoming Volume Update = " +arr[8])
+            console.log("Upcoming Price Update = "+ arr[5])
             this.currencyMap[currencyName].updateVolume(arr[8])
             this.currencyMap[currencyName].updatePrice(arr[5])
           }
         });
-      
+
         //  console.log(arr)
         //  this.type = arr[0]
         //  this.exchangeName = arr[1]
@@ -61,8 +65,8 @@ export class AppComponent  {
         //  this.volume24h = arr[10]
         //  this.volume24hTo = arr[11]
         //  this.maskInt = arr[12]
-    
-        
+
+
         console.log(this.type)
       }})
       setTimeout(function(){ this.calculateIntervalResults(); }, 300000);
