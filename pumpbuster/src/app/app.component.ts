@@ -44,7 +44,7 @@ export class AppComponent  {
         this.statics.currencies.forEach((currencyName, index) => {
           if (currencyName === arr[2]){
             console.log("New Currency Name = " + currencyName)
-            console.log("Upcoming Volume Update = " +arr[8])
+            console.log("Upcoming Volume Update = " + arr[8])
             console.log("Upcoming Price Update = "+ arr[5])
             this.currencyMap[currencyName].updateVolume(arr[8])
             this.currencyMap[currencyName].updatePrice(arr[5])
