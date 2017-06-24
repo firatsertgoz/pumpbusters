@@ -12,6 +12,7 @@ export class CurrencyPair {
     lastVolumeAverage : number
     pricePercentageDifference : number
     volumePercentageDifference : Number
+    initialized : boolean = false
     constructor(exchangeName : string) {
         this.exchangeName = exchangeName;
         this.lastPriceAverage = 0
@@ -19,7 +20,7 @@ export class CurrencyPair {
         this.pricePercentageDifference = 5
         this.volumePercentageDifference = 5
     }
-    
+
     updateVolume(lastVolumeTo : number){
       this.currentMinVolumeAgg.push(lastVolumeTo)
     }
@@ -29,6 +30,9 @@ export class CurrencyPair {
     }
 
     calculateIntervalResult(){
+       if (this.initialized == false){
+         this.initialize
+       }
         var currentPriceAgg = 0
         var currentVolumeAgg = 0
       if(this.lastPriceAverage != 0 && this.lastVolumeAverage != 0)
@@ -43,10 +47,28 @@ export class CurrencyPair {
             let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
             let criticalPointPrice   =  ((currentPriceAverage/this.lastPriceAverage) * 100) - 100
             let criticialPointVolume =  ((currentVolumeAverage/this.lastVolumeAverage) * 100) - 100
-            if( criticalPointPrice > 5 && criticialPointVolume > 1)
+            if( criticalPointPrice > 1 && criticialPointVolume > 1)
             {
               console.log("PUMP ALERT FOR" + this.exchangeName)
             }
+            this.lastPriceAverage = currentVolumeAverage
+            this.lastVolumeAverage = currentPriceAverage
       }
+    }
+    initialize()
+    {
+      var currentPriceAgg = 0
+      var currentVolumeAgg = 0
+      for (let eachPrice of this.currentMinPriceAgg) {
+          currentPriceAgg = currentPriceAgg + eachPrice
+          }
+          for (let eachVolume of this.currentMinVolumeAgg) {
+              currentVolumeAgg += eachVolume
+              }
+      let currentPriceAverage  = currentPriceAgg/this.currentMinPriceAgg.length
+      let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
+      this.lastPriceAverage = currentVolumeAverage
+      this.lastVolumeAverage = currentPriceAverage
+      this.initialized = true
     }
 }
