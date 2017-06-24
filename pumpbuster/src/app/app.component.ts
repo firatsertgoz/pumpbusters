@@ -69,7 +69,7 @@ export class AppComponent  {
 
         console.log(this.type)
       }})
-      setTimeout(function(){ this.calculateIntervalResults(); }, 300000);
+      setTimeout(()=>{ this.calculateIntervalResults(); }, 300000);
   }
     constructor(private statics: Statics) {
      this.type = 5
