@@ -22,44 +22,62 @@ export class CurrencyPair {
     }
 
     updateVolume(lastVolumeTo : number){
-      this.currentMinVolumeAgg.push(lastVolumeTo)
+      if (lastVolumeTo){
+        this.currentMinVolumeAgg.push(lastVolumeTo)
+      }
     }
 
     updatePrice(price : number){
-      this.currentMinPriceAgg.push(price)
+      if (price) {
+        this.currentMinPriceAgg.push(price)
+      }
     }
 
     calculateIntervalResult(){
        if (this.initialized == false){
-         this.initialize
-       }
-        var currentPriceAgg = 0
-        var currentVolumeAgg = 0
-      if(this.lastPriceAverage != 0 && this.lastVolumeAverage != 0)
-      {
-        for (let eachPrice of this.currentMinPriceAgg) {
-            currentPriceAgg = currentPriceAgg + eachPrice
+         this.initialize()
+       } else {
+          var currentPriceAgg = 0
+          var currentVolumeAgg = 0
+        if(this.lastPriceAverage != 0 && this.lastVolumeAverage != 0 && this.currentMinPriceAgg.length > 0 && this.currentMinVolumeAgg.length > 0)
+        {
+          for (let eachPrice of this.currentMinPriceAgg) {
+              if (eachPrice > 1){
+                console.log('price too big')
+                console.log(this.exchangeName)
+              }
+              currentPriceAgg = currentPriceAgg + eachPrice
             }
-            for (let eachVolume of this.currentMinVolumeAgg) {
-                currentVolumeAgg += eachVolume
+              for (let eachVolume of this.currentMinVolumeAgg) {
+                  currentVolumeAgg += eachVolume
                 }
-            let currentPriceAverage  = currentPriceAgg/this.currentMinPriceAgg.length
-            let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
-            let criticalPointPrice   =  ((currentPriceAverage/this.lastPriceAverage) * 100) - 100
-            let criticialPointVolume =  ((currentVolumeAverage/this.lastVolumeAverage) * 100) - 100
-            if( criticalPointPrice > 1 && criticialPointVolume > 1)
-            {
-              console.log("PUMP ALERT FOR" + this.exchangeName)
-            }
-            this.lastPriceAverage = currentVolumeAverage
-            this.lastVolumeAverage = currentPriceAverage
-      }
+             
+              let currentPriceAverage  = currentPriceAgg/this.currentMinPriceAgg.length
+                 
+              console.log('CURRENT PRICE AVG' + currentPriceAverage);
+              console.log('CURRENT PRICE AVERAGE' + currentPriceAverage);
+              let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
+              let criticalPointPrice   =  ((currentPriceAverage/this.lastPriceAverage) * 100) - 100
+              let criticialPointVolume =  ((currentVolumeAverage/this.lastVolumeAverage) * 100) - 100
+              console.log('CRITICAL POINT PRICE' + criticalPointPrice)
+              if( criticalPointPrice > 1 && criticialPointVolume > 1)
+              {
+                alert("PUMP ALERT FOR" + this.exchangeName)
+              }
+              this.lastPriceAverage =  currentPriceAverage
+              this.lastVolumeAverage =  currentVolumeAverage
+        }
+       }
     }
     initialize()
     {
+      console.log(this.currentMinPriceAgg.length);
+      if(this.currentMinPriceAgg.length > 0 && this.currentMinVolumeAgg.length > 0){
+       
       var currentPriceAgg = 0
       var currentVolumeAgg = 0
       for (let eachPrice of this.currentMinPriceAgg) {
+          console.log(eachPrice)
           currentPriceAgg = currentPriceAgg + eachPrice
           }
           for (let eachVolume of this.currentMinVolumeAgg) {
@@ -67,8 +85,9 @@ export class CurrencyPair {
               }
       let currentPriceAverage  = currentPriceAgg/this.currentMinPriceAgg.length
       let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
-      this.lastPriceAverage = currentVolumeAverage
-      this.lastVolumeAverage = currentPriceAverage
+      this.lastPriceAverage = currentPriceAverage
+      this.lastVolumeAverage = currentVolumeAverage
       this.initialized = true
+    }
     }
 }
