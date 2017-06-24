@@ -28,7 +28,7 @@ export class AppComponent  {
      //called after the constructor and called  after the first ngOnChanges() 
   
       var socket = socketIo("wss://streamer.cryptocompare.com");
-      socket.emit('SubAdd', { subs: ['2~Poloniex~BTC~USD'] } );
+      socket.emit('SubAdd', { subs: ['2~BitTrex~ANS~BTC', '2~BitTrex~LSK~BTC'] } );
       socket.on("m", (message) => {
         this.response = message
         var arr: Array<string> = message.split('~')
