@@ -46,6 +46,7 @@ export class AppComponent  {
         if (arr.length > 1){
           this.currencyMap[arr[2]].updateVolume(parseFloat(arr[8]))
           this.currencyMap[arr[2]].updatePrice(parseFloat(arr[5]))
+          this.currencyMap[arr[2]].update24hrTo(parseFloat(arr[11]))
         
           this.type = arr[0]
           this.exchangeName = arr[1]
