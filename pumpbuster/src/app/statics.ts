@@ -13,6 +13,7 @@ export class Statics {
     "XBB","XVC","GAM","QRL","WINGS","QTL","GCR","SLR","SIB","EBST","PEPE","PKB","BSD","TX","DRACO","RLC","SWIFT","XAUR","SYNX","EMC2","PDC","BTA","EFL","2GIVE","DGD","ERC","AUR",
     "SPHR","RBY","1ST","REP","AEON","BRX","BRK","SLS","LUN","ION","UNB","TRST","JWL","UNO","LGD","TIME","GUP","GNO"
     ]
+    alertedObj = {}
 
 
     constructor() { 

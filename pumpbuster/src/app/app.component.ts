@@ -26,12 +26,14 @@ export class AppComponent  {
   globals
   currencySubs = []
   currencyMap = {}
+  alertedObj = {} //alerted currencies
 
  ngOnInit(){
      //called after the constructor and called  after the first ngOnChanges()
+     
 
      this.statics.currencies.forEach((currencyName, index )=> {
-        this.currencyMap[currencyName] = new CurrencyPair(currencyName)
+        this.currencyMap[currencyName] = new CurrencyPair(currencyName, this);
         this.currencySubs.push(`2~BitTrex~${currencyName}~BTC`)
      });
       var socket = socketIo("wss://streamer.cryptocompare.com");
@@ -60,17 +62,41 @@ export class AppComponent  {
           this.volume24hTo = arr[11]
           this.maskInt = arr[12]
       }})
-      setInterval(()=>{ this.calculateIntervalResults(); }, 15000 );
+      setInterval(()=>{ this.calculateIntervalResults(); }, 5000 );
   }
     constructor(private statics: Statics) {
      this.type = 5
      this.globals = this.statics.globals
+     this.statics.alertedObj = {}
     }
 
     calculateIntervalResults(): void {
       this.statics.currencies.forEach((currencyName, idx) => {
         this.currencyMap[currencyName].calculateIntervalResult();
       });
+    }
+
+    callback(currencyName, criticalPointPrice): void {
+      this.statics.alertedObj[currencyName] = {}
+      this.statics.alertedObj[currencyName] = {
+        "name": currencyName,
+        "criticalPointPrice": criticalPointPrice,
+        "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC"
+      }
+     // alert('ALERT' + currencyName)
+    }
+    keys(): Array<string> {
+      return Object.keys(this.statics.alertedObj);
+    }
+
+    getName(key){
+      return this.statics.alertedObj[key].name
+    }
+    getCriticalPointPrice(key){
+      return this.statics.alertedObj[key].criticalPointPrice;
+    }
+    goToCoinigy(key){
+      window.open(this.statics.alertedObj[key].coinigyURL, '_blank');
     }
 
   }

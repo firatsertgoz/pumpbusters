@@ -13,12 +13,14 @@ export class CurrencyPair {
     pricePercentageDifference : number
     volumePercentageDifference : Number
     initialized : boolean = false
-    constructor(exchangeName : string) {
+    callback //callback to call 
+    constructor(exchangeName : string, callback) {
         this.exchangeName = exchangeName;
         this.lastPriceAverage = 0
         this.lastVolumeAverage = 0
         this.pricePercentageDifference = 5
         this.volumePercentageDifference = 5
+        this.callback = callback
     }
 
     updateVolume(lastVolumeTo : number){
@@ -60,9 +62,9 @@ export class CurrencyPair {
               let criticalPointPrice   =  ((currentPriceAverage/this.lastPriceAverage) * 100) - 100
               let criticialPointVolume =  ((currentVolumeAverage/this.lastVolumeAverage) * 100) - 100
               console.log('CRITICAL POINT PRICE' + criticalPointPrice)
-              if( criticalPointPrice > 1 && criticialPointVolume > 1)
-              {
-                alert("PUMP ALERT FOR" + this.exchangeName)
+              if( criticalPointPrice > 0.03 && criticialPointVolume > 0.03){
+                //alert("PUMP ALERT FOR " + this.exchangeName)
+                this.callback.callback(this.exchangeName, criticalPointPrice)
               }
               this.lastPriceAverage =  currentPriceAverage
               this.lastVolumeAverage =  currentVolumeAverage
@@ -72,28 +74,25 @@ export class CurrencyPair {
 
        }
     }
-    initialize()
-    {
+    initialize(){
       console.log(this.currentMinPriceAgg.length);
       if(this.currentMinPriceAgg.length > 0 && this.currentMinVolumeAgg.length > 0){
-       
-      var currentPriceAgg = 0
-      var currentVolumeAgg = 0
-      for (let eachPrice of this.currentMinPriceAgg) {
-          console.log(eachPrice)
-          currentPriceAgg = currentPriceAgg + eachPrice
-          }
-          for (let eachVolume of this.currentMinVolumeAgg) {
-              currentVolumeAgg += eachVolume
-              }
-      let currentPriceAverage  = currentPriceAgg/this.currentMinPriceAgg.length
-      let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
-      this.lastPriceAverage = currentPriceAverage
-      this.lastVolumeAverage = currentVolumeAverage
-      this.initialized = true
-    }
-    }
-
+        var currentPriceAgg = 0
+        var currentVolumeAgg = 0
+        for (let eachPrice of this.currentMinPriceAgg) {
+            console.log(eachPrice)
+            currentPriceAgg = currentPriceAgg + eachPrice
+            }
+            for (let eachVolume of this.currentMinVolumeAgg) {
+                currentVolumeAgg += eachVolume
+                }
+        let currentPriceAverage  = currentPriceAgg/this.currentMinPriceAgg.length
+        let currentVolumeAverage = currentVolumeAgg/this.currentMinVolumeAgg.length
+        this.lastPriceAverage = currentPriceAverage
+        this.lastVolumeAverage = currentVolumeAverage
+        this.initialized = true
+      }
+  }
 }
 
 
