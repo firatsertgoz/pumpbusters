@@ -33,7 +33,7 @@ body {
 }
 .table-filter {
 	background-color: #fff;
-	/*border-bottom: 1px solid #eee;*/
+	border-bottom: 1px solid #eee;
 }
 .table-filter tbody tr:hover {
 	cursor: pointer;
@@ -42,7 +42,7 @@ body {
 .table-filter tbody tr td {
 	padding: 10px;
 	vertical-align: middle;
-	/*border-top-color: #eee;*/
+	border-top-color: #eee;
 }
 .table-filter tbody tr.selected td {
 	background-color: #eee;
@@ -108,7 +108,7 @@ body {
 	width: 35px;
 }
 .table-filter .media-body {
-    display: block;
+    /*display: block;*/
     /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
 }
 .table-filter .media-meta {
