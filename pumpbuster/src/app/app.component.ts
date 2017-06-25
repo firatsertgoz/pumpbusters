@@ -76,12 +76,14 @@ export class AppComponent  {
     callback(currencyName, criticalPointPrice): void {
       this.statics.alertedObj[currencyName] = {}
       var date = new Date();
-      var timestamp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      var timestampStr = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      var timestamp = date.getMilliseconds();
       this.statics.alertedObj[currencyName] = {
         "name": currencyName,
         "criticalPointPrice": criticalPointPrice,
         "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC",
-        "timestamp": timestamp
+        "timestamp": timestamp,
+        "timestampStr": timestampStr
       }
      // alert('ALERT' + currencyName)
     }
@@ -102,8 +104,8 @@ export class AppComponent  {
     goToCoinigy(key){
       window.open(this.statics.alertedObj[key].coinigyURL, '_blank');
     }
-    getTimestamp(key) {
-      return this.statics.alertedObj[key].timestamp;
+    getTimestampStr(key) {
+      return this.statics.alertedObj[key].timestampStr;
     }
 
   }
