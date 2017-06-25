@@ -90,7 +90,13 @@ export class AppComponent  {
       }
       var audio = new Audio('../assets/your-turn.mp3');
       audio.play();
-     // alert('ALERT' + currencyName)
+      window.open("https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC", '_blank');
+      var posneg = "+"
+      if(criticalPointPrice < 0){
+        posneg = "-"
+    }
+      var utterance = new SpeechSynthesisUtterance(currencyName + posneg + (Math.round(criticalPointPrice * 100) / 100));
+      window.speechSynthesis.speak(utterance);
     }
     keys(): Array<string> {
       return Object.keys(this.statics.alertedObj).sort((a,b) => {
