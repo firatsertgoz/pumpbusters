@@ -91,9 +91,9 @@ export class AppComponent  {
       var audio = new Audio('../assets/your-turn.mp3');
       audio.play();
       window.open("https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC", '_blank');
-      var posneg = "+"
+      var posneg = "positive"
       if(criticalPointPrice < 0){
-        posneg = "-"
+        posneg = "negative"
     }
       var utterance = new SpeechSynthesisUtterance(currencyName + posneg + (Math.round(criticalPointPrice * 100) / 100));
       window.speechSynthesis.speak(utterance);
