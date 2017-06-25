@@ -42,9 +42,6 @@ export class AppComponent  {
         this.response = message
         var arr: Array<string> = message.split('~')
         if (arr.length > 1){
-          // console.log("New Currency Name = " + arr[2])
-          // console.log("Upcoming Volume Update = " +arr[8])
-          // console.log("Upcoming Price Update = "+ arr[5])
           this.currencyMap[arr[2]].updateVolume(parseFloat(arr[8]))
           this.currencyMap[arr[2]].updatePrice(parseFloat(arr[5]))
         
@@ -78,10 +75,13 @@ export class AppComponent  {
 
     callback(currencyName, criticalPointPrice): void {
       this.statics.alertedObj[currencyName] = {}
+      var date = new Date();
+      var timestamp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
       this.statics.alertedObj[currencyName] = {
         "name": currencyName,
         "criticalPointPrice": criticalPointPrice,
-        "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC"
+        "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC",
+        "timestamp": timestamp
       }
      // alert('ALERT' + currencyName)
     }
@@ -97,6 +97,9 @@ export class AppComponent  {
     }
     goToCoinigy(key){
       window.open(this.statics.alertedObj[key].coinigyURL, '_blank');
+    }
+    getTimestamp(key) {
+      return this.statics.alertedObj[key].timestamp;
     }
 
   }
