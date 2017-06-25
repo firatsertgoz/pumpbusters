@@ -3,7 +3,7 @@
 	<div class="row">
 		<section class="content">
 			<h1>Pumpbusters</h1>
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-6 col-md-offset-right-3">
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="table-container">
@@ -40,6 +40,31 @@
 								</tbody>
 							</table>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<form class="form-inline">
+							<div class="row">
+								<div class="col-md-3 col-md-offset-right-3">
+									 <div class="form-group">
+       									 <input type="text" #fromValue class="form-control" placeholder="From" (keyup)="updateFromValue(fromValue.value)">
+    								 </div>
+								</div>
+								
+								<div class="col-md-3">
+   							   		 <div class="form-group">
+       									 <input type="text" #toValue class="form-control" placeholder="To" (keyup)="updateToValue(toValue.value)">
+    								 </div>
+								</div>
+								<div class="col-md-2 col-md-offset-3">
+									<label>{{calculatedProfitStr }} </label>
+								</div>
+							</div>
+						
+						</form>
 					</div>
 				</div>
 			</div>

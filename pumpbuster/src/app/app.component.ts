@@ -27,7 +27,9 @@ export class AppComponent  {
   currencySubs = []
   currencyMap = {}
   alertedObj = {} //alerted currencies
-
+  calculatedProfitStr;
+  fromValue = 0;
+  toValue = 0
  ngOnInit(){
      //called after the constructor and called  after the first ngOnChanges()
      
@@ -106,6 +108,30 @@ export class AppComponent  {
     }
     getTimestampStr(key) {
       return this.statics.alertedObj[key].timestampStr;
+    }
+
+    updateFromValue(fromValue){
+      console.log(fromValue)
+      this.fromValue = parseFloat(fromValue);
+      this.calculateProfitOrLoss();
+    }
+    updateToValue(toValue){
+      this.toValue = parseFloat(toValue);
+      this.calculateProfitOrLoss();
+    }
+    calculateProfitOrLoss(){
+      // console.log(this.fromValue + ' ' + this.toValue)
+      if (this.fromValue > 0 && this.toValue > 0){
+        if (this.fromValue > this.toValue) {
+          this.calculatedProfitStr =  "-%"+ (( 1 - (this.toValue / this.fromValue) ) * 100).toFixed(1)
+        } else if (this.fromValue == this.toValue){
+          this.calculatedProfitStr = "%0"
+        } else {
+         this.calculatedProfitStr =  "+%"+ (( (this.toValue / this.fromValue) - 1) * 100).toFixed(1)
+        }
+      } else {
+        this.calculatedProfitStr = ""
+      }
     }
 
   }
