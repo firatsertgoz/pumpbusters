@@ -67,6 +67,9 @@ export class CurrencyPair {
               this.lastPriceAverage =  currentPriceAverage
               this.lastVolumeAverage =  currentVolumeAverage
         }
+        this.currentMinVolumeAgg = []
+        this.currentMinPriceAgg = []
+
        }
     }
     initialize()
@@ -90,4 +93,8 @@ export class CurrencyPair {
       this.initialized = true
     }
     }
+
 }
+
+
+
