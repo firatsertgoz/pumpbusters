@@ -62,7 +62,7 @@ export class AppComponent  {
           this.volume24hTo = arr[11]
           this.maskInt = arr[12]
       }})
-      setInterval(()=>{ this.calculateIntervalResults(); }, 5000 );
+      setInterval(()=>{ this.calculateIntervalResults(); }, 30000 );
   }
     constructor(private statics: Statics) {
      this.type = 5
