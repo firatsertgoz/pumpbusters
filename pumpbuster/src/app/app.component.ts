@@ -86,7 +86,11 @@ export class AppComponent  {
      // alert('ALERT' + currencyName)
     }
     keys(): Array<string> {
-      return Object.keys(this.statics.alertedObj);
+      return Object.keys(this.statics.alertedObj).sort((a,b) => {
+        if ( b["timestamp"] >  a["timestamp"]){
+          return -1;
+        } else return 1
+      });
     }
 
     getName(key){
