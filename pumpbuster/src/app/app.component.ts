@@ -61,7 +61,7 @@ export class AppComponent  {
           this.volume24hTo = arr[11]
           this.maskInt = arr[12]
       }})
-      setInterval(()=>{ this.calculateIntervalResults(); }, 5000 );
+      setInterval(()=>{ this.calculateIntervalResults(); }, 30000 );
   }
     constructor(private statics: Statics) {
      this.type = 5
@@ -87,6 +87,8 @@ export class AppComponent  {
         "timestamp": timestamp,
         "timestampStr": timestampStr
       }
+      var audio = new Audio('../assets/your-turn.mp3');
+      audio.play();
      // alert('ALERT' + currencyName)
     }
     keys(): Array<string> {
