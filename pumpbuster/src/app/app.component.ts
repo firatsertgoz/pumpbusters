@@ -62,7 +62,7 @@ export class AppComponent  {
           this.volume24hTo = arr[11]
           this.maskInt = arr[12]
       }})
-      setInterval(()=>{ this.calculateIntervalResults(); }, 15000 );
+      setInterval(()=>{ this.calculateIntervalResults(); }, 5000 );
   }
     constructor(private statics: Statics) {
      this.type = 5
@@ -76,7 +76,7 @@ export class AppComponent  {
       });
     }
 
-    callback(currencyName, criticalPointPrice): void {
+    callback(currencyName, criticalPointPrice, lastaverage): void {
       this.statics.alertedObj[currencyName] = {}
       var date = new Date();
       var timestampStr = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -86,17 +86,18 @@ export class AppComponent  {
         "criticalPointPrice": criticalPointPrice,
         "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC",
         "timestamp": timestamp,
-        "timestampStr": timestampStr
+        "timestampStr": timestampStr,
+        "lastaverage" : lastaverage
       }
       var audio = new Audio('../assets/your-turn.mp3');
       audio.play();
-    //   window.open("https://www.coinigy.com/main/markets/BTRX/"+ currencyName + "/BTC", '_blank');
-    //   var posneg = "positive"
-    //   if(criticalPointPrice < 0){
-    //     posneg = "negative"
-    // }
-    //   var utterance = new SpeechSynthesisUtterance(currencyName + posneg + (Math.round(criticalPointPrice * 100) / 100));
-    //   window.speechSynthesis.speak(utterance);
+      window.open("https://bittrex.com/Market/Index?MarketName=BTC-"+ currencyName, '_blank');
+      var posneg = "pump"
+      if(criticalPointPrice < 0){
+        posneg = "dump"
+    }
+      var utterance = new SpeechSynthesisUtterance(currencyName + posneg);
+      window.speechSynthesis.speak(utterance);
     }
     keys(): Array<string> {
       return Object.keys(this.statics.alertedObj).sort((a,b) => {
@@ -117,6 +118,9 @@ export class AppComponent  {
     }
     getTimestampStr(key) {
       return this.statics.alertedObj[key].timestampStr;
+    }
+    getLastAverage(key){
+      return this.statics.alertedObj[key].lastaverage;
     }
 
     updateFromValue(fromValue){
