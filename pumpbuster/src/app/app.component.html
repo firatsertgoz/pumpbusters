@@ -1,4 +1,3 @@
-
 <div class="container">
 	<div class="row">
 		<section class="content">
@@ -9,7 +8,7 @@
 						<div class="table-container">
 							<table class="table table-filter">
 								<tbody>
-									<tr data-status="pagado"  *ngFor="let key of keys()">
+									<tr data-status="pagado" *ngFor="let key of keys()">
 										<td>
 											<div class="ckbox">
 												<input type="checkbox" id="checkbox1">
@@ -45,30 +44,40 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<form class="form-inline">
-							<div class="row">
-								<div class="col-md-3 col-md-offset-right-3">
-									 <div class="form-group">
-       									 <input type="text" #fromValue class="form-control" placeholder="From" (keyup)="updateFromValue(fromValue.value)" (click)="$event.target.select()">
-    								 </div>
+				<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<form class="form-inline">
+								<div class="row">
+									<div class="col-md-3 col-md-offset-right-3">
+										<div class="form-group">
+											<input type="text" #fromValue class="form-control" placeholder="From" (keyup)="updateFromValue(fromValue.value)" (click)="$event.target.select()">
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<input type="text" #toValue class="form-control" placeholder="To" (keyup)="updateToValue(toValue.value)" (click)="$event.target.select()">
+										</div>
+									</div>
+									<div class="col-md-2 col-md-offset-3">
+										<label>{{calculatedProfitStr }} </label>
+									</div>
 								</div>
-								
-								<div class="col-md-3">
-   							   		 <div class="form-group">
-       									 <input type="text" #toValue class="form-control" placeholder="To" (keyup)="updateToValue(toValue.value)" (click)="$event.target.select()">
-    								 </div>
-								</div>
-								<div class="col-md-2 col-md-offset-3">
-									<label>{{calculatedProfitStr }} </label>
-								</div>
-							</div>
-						
-						</form>
+
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</section>
+		<div class="row">
+			<orders></orders>
+		</div>
 	</div>
+
+
+
+
 </div>
