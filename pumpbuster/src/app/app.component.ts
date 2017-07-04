@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import { Statics } from './statics';
-import { CurrencyPair } from './CurrencyPair'
+import { CurrencyPair } from './CurrencyPair';
+import { ApiService } from './api.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -32,8 +33,6 @@ export class AppComponent {
   toValue = 0
   ngOnInit() {
     //called after the constructor and called  after the first ngOnChanges()
-
-
     this.statics.currencies.forEach((currencyName, index) => {
       this.currencyMap[currencyName] = new CurrencyPair(currencyName, this);
       this.currencySubs.push(`2~BitTrex~${currencyName}~BTC`)
@@ -65,7 +64,7 @@ export class AppComponent {
     })
     setInterval(() => { this.calculateIntervalResults(); }, 5000);
   }
-  constructor(private statics: Statics) {
+  constructor(private statics: Statics, private apiService: ApiService) {
     this.type = 5
     this.globals = this.statics.globals
     this.statics.alertedObj = {}
@@ -149,6 +148,10 @@ export class AppComponent {
 
   getImageSrc(key) {
     return "assets/" + this.statics.currencyImageMap[key]
+  }
+
+  selectCurrency(key) {
+    this.apiService.getQuote(this.statics.alertedObj[key].name);
   }
 
 }

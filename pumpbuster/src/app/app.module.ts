@@ -4,20 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import {Statics} from './statics';
+import { Statics } from './statics';
 import { OrdersComponent } from './orders.component';
+import { ApiService } from './api.service';
+import { QuotesComponent } from './quote.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OrdersComponent
+    OrdersComponent,
+    QuotesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [Statics],
+  providers: [Statics, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
