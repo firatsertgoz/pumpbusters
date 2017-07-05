@@ -31,6 +31,7 @@ export class AppComponent {
   calculatedProfitStr;
   fromValue = 0;
   toValue = 0
+  currentCurrency = ""
   ngOnInit() {
     //called after the constructor and called  after the first ngOnChanges()
     this.statics.currencies.forEach((currencyName, index) => {
@@ -151,7 +152,7 @@ export class AppComponent {
   }
 
   selectCurrency(key) {
-    this.apiService.getQuote(this.statics.alertedObj[key].name);
+    this.currentCurrency = this.statics.alertedObj[key].name
   }
 
 }

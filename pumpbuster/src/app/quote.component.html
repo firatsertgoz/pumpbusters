@@ -10,35 +10,39 @@
         <td>SPREAD</td>
     </tr>
 </table>-->
-<table class="table">
+<div [hidden]="_currency">
+    <h1>No currency selected</h1>
+</div>
+
+<table class="table" [hidden]="!_currency">
     <thead>
-        <h1>ANS</h1>
+        <h1>{{_currency}}</h1>
 
     </thead>
     <tbody>
         <tr>
             <th>LAST</th>
-            <td>0.00300250</td>
+            <td>{{last}}</td>
         </tr>
         <tr>
             <th>฿ VOL</th>
-            <td>0.00300250</td>
+            <td>{{vol}}</td>
         </tr>
         <tr>
             <th>BID</th>
-            <td>0.00300250</td>
+            <td>{{bid}}</td>
         </tr>
         <tr>
             <th>ASK</th>
-            <td>0.00300250</td>
+            <td>{{ask}}</td>
         </tr>
         <tr>
             <th>24H HIGH</th>
-            <td>0.00300250</td>
+            <td>{{high}}</td>
         </tr>
         <tr>
             <th>24H LOW</th>
-            <td>0.00300250</td>
+            <td>{{low}}</td>
         </tr>
     </tbody>
 </table>

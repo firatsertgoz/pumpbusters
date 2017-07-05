@@ -16,7 +16,7 @@ export class ApiService {
     }
 
     getQuote(currencyName: string) {
-        const url = `https://bittrex.com/api/v1.1/public/getticker?market=${currencyName}`
+        const url = `${this.baseUrl}/getmarketsummary?market=${currencyName}`
         return this.http
             .get(url)
             .toPromise()
