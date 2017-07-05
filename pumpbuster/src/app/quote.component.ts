@@ -34,12 +34,12 @@ export class QuotesComponent {
 
         if (this._currency) {
             this.apiService.getQuote(this._currency).then(response => {
-                this.last = response["result"][0]["Last"];
-                this.vol = response["result"][0]["BaseVolume"];
-                this.bid = response["result"][0]["Bid"];
-                this.ask = response["result"][0]["Ask"];
-                this.high = response["result"][0]["High"];
-                this.low = response["result"][0]["Low"];
+                this.last = response["result"][0]["Last"].toFixed(8);
+                this.vol = response["result"][0]["BaseVolume"].toFixed(8);
+                this.bid = response["result"][0]["Bid"].toFixed(8);
+                this.ask = response["result"][0]["Ask"].toFixed(8);
+                this.high = response["result"][0]["High"].toFixed(8);
+                this.low = response["result"][0]["Low"].toFixed(8);
 
             })
         }
