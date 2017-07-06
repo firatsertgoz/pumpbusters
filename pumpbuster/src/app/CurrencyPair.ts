@@ -64,11 +64,11 @@ export class CurrencyPair {
         let criticalPointPrice = ((currentPriceAverage / this.lastPriceAverage) * 100) - 100
         let criticialPointVolume = ((currentVolumeAverage / this.lastVolumeAverage) * 100) - 100
         // console.log('CRITICAL POINT PRICE' + criticalPointPrice)
-        if (criticalPointPrice > 0.001 && criticialPointVolume > 0.001 && this.volume24hTo > 75) {
+        if (criticalPointPrice > 0.001 && criticialPointVolume > 0.001 && this.volume24hTo > 50) {
           //alert("PUMP ALERT FOR " + this.exchangeName)
           this.callback.callback(this.exchangeName, criticalPointPrice, this.lastPriceAverage)
         }
-        if (criticalPointPrice < -3 && criticialPointVolume > 3 && this.volume24hTo > 75) {
+        if (criticalPointPrice < -2 && criticialPointVolume > 3 && this.volume24hTo > 200) {
           this.callback.callback(this.exchangeName, criticalPointPrice, this.lastPriceAverage)
         }
         this.lastPriceAverage = currentPriceAverage

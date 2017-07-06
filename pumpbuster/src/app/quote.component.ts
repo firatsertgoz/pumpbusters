@@ -34,6 +34,7 @@ export class QuotesComponent {
         if (this.updater) {
             clearInterval(this.updater)
         }
+        this.resetArrows();
         this.quoteUpdater();
         this.updater = setInterval(() => { this.quoteUpdater(); }, 3000);
     }
@@ -104,6 +105,15 @@ export class QuotesComponent {
         } else {
             this.ask = ask;
         }
+    }
+
+    resetArrows() {
+        this.currentArrowVol = "fa fa-minus"
+        this.currentArrowLast = "fa fa-minus"
+        this.currentArrowBid = "fa fa-minus"
+        this.currentArrowAsk = "fa fa-minus"
+        this.currentArrowHigh = "fa fa-minus"
+        this.currentArrowLow = "fa fa-minus"
     }
 
 }
