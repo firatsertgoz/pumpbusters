@@ -1,4 +1,4 @@
-<form class="navbar-form navbar-left" role="search">
+<form class="navbar-form navbar-left" role="search" [hidden]="isOrdersHidden()">
     <div class="row">
         <h1>Orders</h1>
     </div>
@@ -6,7 +6,7 @@
         <div class="col-md-5 buy-pane">
             <div class="row">
                 <div class="pull-left">
-                    BUY ANS
+                    BUY {{_currency}}
                 </div>
                 <div class="pull-right">
                     ( 0.06663279 ) BTC
@@ -23,7 +23,7 @@
             <div class="row form-wrapper">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon">฿ per ANS</span>
+                        <span class="input-group-addon">฿ per {{_currency}}</span>
                         <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                     </div>
                 </div>
@@ -31,7 +31,7 @@
             <div class="row form-wrapper">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon">ANS to buy</span>
+                        <span class="input-group-addon">{{_currency}} to buy</span>
                         <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                     </div>
                 </div>
@@ -45,7 +45,7 @@
         <div class="col-md-5 col-md-offset-1 sell-pane">
             <div class="row">
                 <div class="pull-left">
-                    SELL ANS
+                    SELL {{_currency}}
                 </div>
                 <div class="pull-right"> ( 0.06663279 ) BTC</div>
             </div>
@@ -60,7 +60,7 @@
             <div class="row form-wrapper">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon">฿ per ANS</span>
+                        <span class="input-group-addon">฿ per {{_currency}}</span>
                         <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                     </div>
                 </div>
@@ -81,3 +81,12 @@
         </div>
     </div>
 </form>
+<div class="row form-wrapper" [hidden]="!needApiKey">
+    <div class="input-group">
+        <span class="input-group-addon">API KEY:</span>
+        <input class="form-control" aria-label="Text input with multiple buttons" #apiInput>
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default btn-success" (click)="saveApiKey(apiInput.value)">Save</button>
+        </div>
+    </div>
+</div>
