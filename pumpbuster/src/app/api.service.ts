@@ -26,15 +26,15 @@ export class ApiService {
             .catch(this.handleError);
     }
 
-    // getCV(cvid: string) {
-    //     const url = `${this.baseUrl}/cv/${cvid}`;
-    //     return this.http
-    //         .get(url)
-    //         .toPromise()
-    //         .then(response => {
-    //             return response.json().response;
-    //         })
-    //         .catch(this.handleError);
-    // }
+    getBalance(apiKey: string, currencyName) {
+        const url = `${this.baseUrl}/getBalance?apiKey=${apiKey}&currencyName${currencyName}`
+        return this.http
+            .get(url)
+            .toPromise()
+            .then(response => {
+                return response.json().response;
+            })
+            .catch(this.handleError);
+    }
 
 }

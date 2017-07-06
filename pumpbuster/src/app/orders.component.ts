@@ -37,6 +37,9 @@ export class OrdersComponent {
     }
   }
 
+  updateBTC() {
+    this.apiService.getBalance(this.apiKey, "BTC");
+  }
 
 
 }
