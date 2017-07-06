@@ -9,7 +9,7 @@
                     BUY {{_currency}}
                 </div>
                 <div class="pull-right">
-                    ( 0.06663279 ) BTC
+                    {{btcOwned}} BTC
                 </div>
             </div>
             <div class="row form-wrapper right">
@@ -47,7 +47,7 @@
                 <div class="pull-left">
                     SELL {{_currency}}
                 </div>
-                <div class="pull-right"> ( 0.06663279 ) BTC</div>
+                <div class="pull-right"> {{currencyOwned ? currencyOwned : 0}} {{_currency}}</div>
             </div>
             <div class="row form-wrapper">
                 <div class="form-group">

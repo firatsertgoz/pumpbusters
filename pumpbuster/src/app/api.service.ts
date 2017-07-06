@@ -27,7 +27,7 @@ export class ApiService {
     }
 
     getBalance(apiKey: string, currencyName) {
-        const url = `${this.baseUrl}/getBalance?apiKey=${apiKey}&currencyName${currencyName}`
+        const url = `${this.baseUrl}/getbalance?apiKey=${apiKey}&currencyName=${currencyName}`
         return this.http
             .get(url)
             .toPromise()

@@ -12,6 +12,8 @@ export class OrdersComponent {
   _currency: string
   apiKey: string
   needApiKey = true
+  btcOwned
+  currencyOwned
 
   constructor(private apiService: ApiService) { }
 
@@ -23,6 +25,7 @@ export class OrdersComponent {
   saveApiKey(apiKey) {
     this.apiKey = apiKey;
     this.needApiKey = false;
+    this.updateBTC()
     console.log("APIKEY: " + this.apiKey);
   }
 
@@ -38,7 +41,9 @@ export class OrdersComponent {
   }
 
   updateBTC() {
-    this.apiService.getBalance(this.apiKey, "BTC");
+    this.apiService.getBalance(this.apiKey, "BTC").then(response => {
+      this.btcOwned = response["result"]["Balance"]
+    })
   }
 
 
