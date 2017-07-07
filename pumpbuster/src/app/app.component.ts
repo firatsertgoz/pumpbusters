@@ -92,7 +92,7 @@ export class AppComponent {
     }
     var audio = new Audio('../assets/your-turn.mp3');
     audio.play();
-    // window.open("https://bittrex.com/Market/Index?MarketName=BTC-" + currencyName, '_blank');
+     window.open("https://bittrex.com/Market/Index?MarketName=BTC-" + currencyName, '_blank');
     var posneg = "pump"
     if (criticalPointPrice < 0) {
       posneg = "dump"

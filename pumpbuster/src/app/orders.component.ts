@@ -42,6 +42,7 @@ export class OrdersComponent {
 
   updateBTC() {
     this.apiService.getBalance(this.apiKey, "BTC").then(response => {
+      console.log(response)
       this.btcOwned = response["result"]["Balance"]
     })
   }

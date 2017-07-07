@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 import json
-from bson.json_util import loads
 import re
 from flask_cors import CORS, cross_origin
 import requests
@@ -23,6 +22,20 @@ def get_market_summary():
             return jsonify({"response": requests.get(url).json(), "statusCode": 200})
         except Exception:
             return jsonify({"response": {}, "statusCode": 404})
+
+
+@app.route('/histohour', methods=['GET'])
+def histohour():
+    if request.method == 'GET':
+        try:
+            fsym = request.args.get('fysm')	
+            tsym = request.args.get("tsym")	
+            e	 = request.args.get('e')
+            limit = request.args.get('limit')	
+            url = 'https://min-api.cryptocompare.com/data/histohour?fsym=' + fsym + '&tsym=' + tsym +'&limit=' + limit + '&e='e
+            return jsonify({"response":request.get(url).json(),statusCode : 200})
+        except Exception
+            return jsonify({"response":{}, "statusCode": 404})
 
 @app.route('/getbalance', methods=['GET'])
 def get_balance():

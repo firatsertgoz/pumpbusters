@@ -36,5 +36,16 @@ export class ApiService {
             })
             .catch(this.handleError);
     }
+    histToHour(fsym: string,tsym: string,limit :string,e: string)
+    {
+        const url = `${this.baseUrl}/histtohour?fsym=${fsym}&tsym=${tsym}&limit=${limit}&e=${e}`
+        return this.http
+            .get(url)
+            .toPromise()
+            .then(response =>{
+                return response.json().response;
+            })
+            .catch(this.handleError);
+    }
 
 }
