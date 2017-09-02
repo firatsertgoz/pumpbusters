@@ -2,3 +2,4 @@ configfile
 __pycache__
 bower_components
 .vscode/*
+node_modules/*
