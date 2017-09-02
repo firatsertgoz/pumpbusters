@@ -1,41 +1,40 @@
 <div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="table-container">
-							<table class="table table-filter">
-								<tbody>
-									<tr data-status="pagado" *ngFor="let key of keys()">
-										<td>
-											<div class="ckbox">
-												<input type="checkbox" id="checkbox1">
-												<label for="checkbox1"></label>
-											</div>
-										</td>
-										<td>
-											<a href="javascript:;" class="star">
-												<i class="glyphicon glyphicon-star"></i>
-											</a>
-										</td>
-										<td (click)="selectCurrency(key)">
-											<div class="media">
-												<a href="#" class="pull-left">
-													<img src = {{getImageSrc(key)}} class="media-photo">
-												</a>
-												<div class="media-body">
-													<span class="media-meta pull-right">{{getTimestampStr(key)}}</span>
-													<h4 class="title">
-														{{getName(key)}}
-														<span class="pull-right pagado">{{getTimestampStr(key)}}</span>
-													</h4>
-													<p class="summary">{{getCriticalPointPrice(key) | number : '1.2-2'}}</p>
-													<p class="summary">{{getLastAverage(key) | number : '1.2-5'}}</p>
-												</div>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="table-container">
+				<table class="table table-filter">
+					<tbody>
+						<tr *ngFor="let key of keys()">
+							<td>
+								<div class="ckbox">
+									<input type="checkbox" id="checkbox1">
+									<label for="checkbox1"></label>
+								</div>
+							</td>
+							<td>
+								<a href="javascript:;" class="star">
+									<i class="glyphicon glyphicon-star"></i>
+								</a>
+							</td>
+							<td (click)="selectCurrency(key)">
+								<div class="media">
+									<a href="#" class="pull-left">
+									</a>
+									<div class="media-body">
+										<span class="media-meta pull-right">{{getTimestampStr(key)}}</span>
+										<h4 class="title">
+											{{getName(key)}}
+											<!-- <span class="pull-right pagado">{{getTimestampStr(key)}}</span> -->
+										</h4>
+										<p class="summary">{{getCriticalPointPrice(key) | number : '1.2-2'}}</p>
+										<p class="summary">{{getLastAverage(key) | number : '1.2-5'}}</p>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+		</div>
+	</div>
+</div>

@@ -1,5 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { Statics } from './statics'
+import { Component, OnInit } from '@angular/core';
+import * as socketIo from 'socket.io-client';
+import { Statics } from './statics';
+import { CurrencyPair } from './CurrencyPair';
+import { ApiService } from './api.service';
+
 @Component({
     selector: 'alert',
     templateUrl: './alert.component.html',
@@ -7,10 +11,142 @@ import { Statics } from './statics'
 })
 
 export class AlertComponent {
+  type
+  exchangeName
+  fromCurrency
+  toCurrency
+  flag
+  price
+  lastUpdate
+  lastVolume
+  lastVolumeTo
+  lastTradeId
+  volume24h
+  volume24hTo
+  maskInt
+  response
+  globals
+  currencySubs = []
+  currencyMap = {}
+  alertedObj = {} //alerted currencies
+  calculatedProfitStr;
+  fromValue = 0;
+  toValue = 0
+  currentCurrency = ""
+  ngOnInit() {
+    //called after the constructor and called  after the first ngOnChanges()
+    this.statics.currencies.forEach((currencyName, index) => {
+      this.currencyMap[currencyName] = new CurrencyPair(currencyName, this);
+      this.currencySubs.push(`2~BitTrex~${currencyName}~BTC`)
+    });
+    var socket = socketIo("wss://streamer.cryptocompare.com");
+    socket.emit('SubAdd', { subs: this.currencySubs });
+    socket.on("m", (message) => {
+      this.response = message
+      var arr: Array<string> = message.split('~')
+      if (arr.length > 1 && this.currencyMap[arr[2]]) {
+        this.currencyMap[arr[2]].updateVolume(parseFloat(arr[8]))
+        this.currencyMap[arr[2]].updatePrice(parseFloat(arr[5]))
+        this.currencyMap[arr[2]].update24hrTo(parseFloat(arr[11]))
 
-    constructor(private statics: Statics){}
-
-    keys(): Array<string> {
-        return Object.keys(this.statics.alertedObj)
+        this.type = arr[0]
+        this.exchangeName = arr[1]
+        this.fromCurrency = arr[2]
+        this.toCurrency = arr[3]
+        this.flag = arr[4]
+        this.price = arr[5]
+        this.lastUpdate = arr[6]
+        this.lastVolume = arr[7]
+        this.lastVolumeTo = arr[8]
+        this.lastTradeId = arr[9]
+        this.volume24h = arr[10]
+        this.volume24hTo = arr[11]
+        this.maskInt = arr[12]
       }
+    })
+    setInterval(() => { this.calculateIntervalResults(); }, 5000);
+  }
+  constructor(private statics: Statics, private apiService: ApiService) {
+    this.statics.alertedObj = {}
+  }
+
+  calculateIntervalResults(): void {
+    this.statics.currencies.forEach((currencyName, idx) => {
+      this.currencyMap[currencyName].calculateIntervalResult();
+    });
+  }
+
+  callback(currencyName, criticalPointPrice, lastaverage): void {
+    this.statics.alertedObj[currencyName] = {}
+    var date = new Date();
+    var timestampStr = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    var timestamp = date.getMilliseconds();
+    this.statics.alertedObj[currencyName] = {
+      "name": currencyName,
+      "criticalPointPrice": criticalPointPrice,
+      "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/" + currencyName + "/BTC",
+      "timestamp": timestamp,
+      "timestampStr": timestampStr,
+      "lastaverage": lastaverage
+    }
+    var audio = new Audio('../assets/your-turn.mp3');
+    audio.play();
+    // window.open("https://bittrex.com/Market/Index?MarketName=BTC-" + currencyName, '_blank');
+    var posneg = "pump"
+    if (criticalPointPrice < 0) {
+      posneg = "dump"
+      // window.open(this.statics.alertedObj[currencyName].coinigyURL, "_blank");
+    }
+    var utterance = new SpeechSynthesisUtterance(currencyName + posneg);
+    window.speechSynthesis.speak(utterance);
+  }
+  keys(): Array<string> {
+    return Object.keys(this.statics.alertedObj)
+  }
+
+  getName(key) {
+    return this.statics.alertedObj[key].name
+  }
+  getCriticalPointPrice(key) {
+    return this.statics.alertedObj[key].criticalPointPrice;
+  }
+  goToCoinigy(key) {
+    window.open(this.statics.alertedObj[key].coinigyURL, '_blank');
+  }
+  getTimestampStr(key) {
+    return this.statics.alertedObj[key].timestampStr;
+  }
+  getLastAverage(key) {
+    return this.statics.alertedObj[key].lastaverage;
+  }
+
+  updateFromValue(fromValue) {
+    this.fromValue = parseFloat(fromValue);
+    this.calculateProfitOrLoss();
+  }
+  updateToValue(toValue) {
+    this.toValue = parseFloat(toValue);
+    this.calculateProfitOrLoss();
+  }
+  calculateProfitOrLoss() {
+    if (this.fromValue > 0 && this.toValue > 0) {
+      if (this.fromValue > this.toValue) {
+        this.calculatedProfitStr = "-%" + ((1 - (this.toValue / this.fromValue)) * 100).toFixed(1)
+      } else if (this.fromValue == this.toValue) {
+        this.calculatedProfitStr = "%0"
+      } else {
+        this.calculatedProfitStr = "+%" + (((this.toValue / this.fromValue) - 1) * 100).toFixed(1)
+      }
+    } else {
+      this.calculatedProfitStr = ""
+    }
+  }
+
+  getImageSrc(key) {
+    return "assets/" + this.statics.currencyImageMap[key]
+  }
+
+  selectCurrency(key) {
+    this.currentCurrency = this.statics.alertedObj[key].name
+  }
 }

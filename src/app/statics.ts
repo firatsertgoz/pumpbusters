@@ -1,9 +1,7 @@
 import { Injectable }    from '@angular/core';
 
-
 @Injectable()
 export class Statics {
-    globals
     currencies = [ "ETH","NMR", "ANS","XRP","KORE","SC", "LTC","LTC", "BNT","DGB","BURST","XVG","BTS","CFI","XEM","RDD","WAVES","ARK","TRUST","EDG","ENRG","LBC","ETC","NXT","GNT","BAY",
     "SHIFT","BAT","BNT","ZEC","QRL","MYST","GAME","KMD","NMR","DASH","PIVX","VTC","ARDR","XZC","SYS","CLOAK","LSK","STEEM","PPC","CANN","NAUT","ANT","UBQ","DOGE","PTOY","HMQ","LMC",
     "VIA","ETH","SNRG","FCT","OMNI","WINGS","XMR","XLM","VRM","MONA","SNGLS","MUE","AGRS","MUSIC","NLG","ZEN","AMP","VTR","ANT","GBYTE","BTC","XMY","SEQ","BLK","FLDC","GBG","XDN",
