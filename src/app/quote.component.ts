@@ -108,12 +108,12 @@ export class QuotesComponent {
     }
 
     resetArrows() {
-        this.currentArrowVol = "fa fa-minus"
-        this.currentArrowLast = "fa fa-minus"
-        this.currentArrowBid = "fa fa-minus"
-        this.currentArrowAsk = "fa fa-minus"
-        this.currentArrowHigh = "fa fa-minus"
-        this.currentArrowLow = "fa fa-minus"
+        this.currentArrowVol 
+            = this.currentArrowLast
+            = this.currentArrowBid 
+            = this.currentArrowAsk 
+            = this.currentArrowHigh 
+            = this.currentArrowLow = "fa fa-minus"
     }
 
 }

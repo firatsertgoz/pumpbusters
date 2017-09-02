@@ -1,41 +1,39 @@
-<div class="col-md-6">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="table-container">
-				<table class="table table-filter">
-					<tbody>
-						<tr *ngFor="let key of keys()">
-							<td>
-								<div class="ckbox">
-									<input type="checkbox" id="checkbox1">
-									<label for="checkbox1"></label>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-container">
+			<table class="table table-filter">
+				<tbody>
+					<tr *ngFor="let key of keys()">
+						<td>
+							<div class="ckbox">
+								<input type="checkbox" id="checkbox1">
+								<label for="checkbox1"></label>
+							</div>
+						</td>
+						<td>
+							<a href="javascript:;" class="star">
+								<i class="glyphicon glyphicon-star"></i>
+							</a>
+						</td>
+						<td>
+							<div>
+								<a href="#" class="pull-left"></a>
+								<div class="media-body">
+									<span class="media-meta pull-right">{{getTimestampStr(key)}}</span>
+									<h4 class="title">
+										{{getName(key)}}
+									</h4>
+									<p class="summary">Change: {{getCriticalPointPrice(key) | number : '1.2-2'}}%</p>
+									<p class="summary">Before: {{getLastAverage(key) | number : '1.2-5'}} BTC
+											<button type = "button" class = "btn btn-danger pull-right btn-table-row" (click)="selectCurrency(key)">Watch</button>
+											<button type = "button" class = "btn btn-primary pull-right btn-table-row" (click)="openInBittrex(key)">Bittrex</button>	
+									</p>
 								</div>
-							</td>
-							<td>
-								<a href="javascript:;" class="star">
-									<i class="glyphicon glyphicon-star"></i>
-								</a>
-							</td>
-							<td (click)="selectCurrency(key)">
-								<div>
-									<a href="#" class="pull-left"></a>
-									<div class="media-body">
-										<span class="media-meta pull-right">{{getTimestampStr(key)}}</span>
-										<h4 class="title">
-											{{getName(key)}}
-										</h4>
-										<p class="summary">Change: {{getCriticalPointPrice(key) | number : '1.2-2'}}%</p>
-										<p class="summary">Before: {{getLastAverage(key) | number : '1.2-5'}} BTC
-												<button type = "button" class = "btn btn-danger pull-right btn-table-row" (click)="selectCurrency(key)">Watch</button>
-												<button type = "button" class = "btn btn-primary pull-right btn-table-row" (click)="openInBittrex(key)">Bittrex</button>	
-										</p>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
