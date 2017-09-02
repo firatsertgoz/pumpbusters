@@ -1,0 +1,5 @@
+node_modules/*
+configfile
+__pycache__
+bower_components
+.vscode/*
