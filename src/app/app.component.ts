@@ -9,5 +9,7 @@ import { ApiService } from './api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  constructor(private statics: Statics){
+    
+  }
 }

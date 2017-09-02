@@ -147,10 +147,11 @@ export class AlertComponent {
   }
 
   selectCurrency(key) {
-    this.currentCurrency = this.statics.alertedObj[key].name
+    this.statics.selectedCurrency = this.statics.alertedObj[key].name
   }
 
   openInBittrex(currencyName){
      window.open("https://bittrex.com/Market/Index?MarketName=BTC-" + currencyName, '_blank');
   }
+  
 }

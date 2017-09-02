@@ -12,7 +12,7 @@ export class Statics {
     "SPHR","RBY","1ST","REP","AEON","BRX","BRK","SLS","LUN","ION","UNB","TRST","JWL","UNO","LGD","TIME","GUP","GNO"
     ]
     alertedObj = {}
-
+    selectedCurrency
    currencyImageMap = {'VRC': 'VRC.svg', 'XAI': 'XAI.svg', 'RISE': 'RISE.svg', 'OK': 'OK.svg', 'BSD': 'BSD.svg',
     'XRP': 'XRP.svg', 'CLAM': 'CLAM.svg', 'BFT': 'BFT.svg', 'MSC': 'MSC.svg', 'SYS': 'SYS.svg', 'FTC': 'FTC.svg',
      'KOBO': 'KOBO.svg', 'RBY': 'RBY.svg', 'MTR': 'MTR.svg', 'NXT': 'NXT.svg', 'LTC': 'LTC.svg', 'SNRG': 'SNRG.svg', 
