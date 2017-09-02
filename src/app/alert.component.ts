@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as socketIo from 'socket.io-client';
-import { Statics } from './statics';
+import { Globals } from './globals';
 import { CurrencyPair } from './CurrencyPair';
 import { ApiService } from './api.service';
 
@@ -25,7 +25,6 @@ export class AlertComponent {
   volume24hTo
   maskInt
   response
-  globals
   currencySubs = []
   currencyMap = {}
   alertedObj = {} //alerted currencies
@@ -35,7 +34,7 @@ export class AlertComponent {
   currentCurrency = ""
   ngOnInit() {
     //called after the constructor and called  after the first ngOnChanges()
-    this.statics.currencies.forEach((currencyName, index) => {
+    this.globals.currencies.forEach((currencyName, index) => {
       this.currencyMap[currencyName] = new CurrencyPair(currencyName, this);
       this.currencySubs.push(`2~BitTrex~${currencyName}~BTC`)
     });
@@ -66,25 +65,24 @@ export class AlertComponent {
     })
     setInterval(() => { this.calculateIntervalResults(); }, 5000);
   }
-  constructor(private statics: Statics, private apiService: ApiService) {
-    this.statics.alertedObj = {}
+  constructor(private globals: Globals, private apiService: ApiService) {
+    this.globals.alertedObj = {}
   }
 
   calculateIntervalResults(): void {
-    this.statics.currencies.forEach((currencyName, idx) => {
+    this.globals.currencies.forEach((currencyName, idx) => {
       this.currencyMap[currencyName].calculateIntervalResult();
     });
   }
 
   callback(currencyName, criticalPointPrice, lastaverage): void {
-    this.statics.alertedObj[currencyName] = {}
+    this.globals.alertedObj[currencyName] = {}
     var date = new Date();
     var timestampStr = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     var timestamp = date.getMilliseconds();
-    this.statics.alertedObj[currencyName] = {
+    this.globals.alertedObj[currencyName] = {
       "name": currencyName,
       "criticalPointPrice": criticalPointPrice,
-      "coinigyURL": "https://www.coinigy.com/main/markets/BTRX/" + currencyName + "/BTC",
       "timestamp": timestamp,
       "timestampStr": timestampStr,
       "lastaverage": lastaverage
@@ -95,63 +93,30 @@ export class AlertComponent {
     var posneg = "pump"
     if (criticalPointPrice < 0) {
       posneg = "dump"
-      // window.open(this.statics.alertedObj[currencyName].coinigyURL, "_blank");
     }
     var utterance = new SpeechSynthesisUtterance(currencyName + posneg);
     window.speechSynthesis.speak(utterance);
   }
   keys(): Array<string> {
-    return Object.keys(this.statics.alertedObj)
+    return Object.keys(this.globals.alertedObj)
   }
 
   getName(key) {
-    return this.statics.alertedObj[key].name
+    return this.globals.alertedObj[key].name
   }
   getCriticalPointPrice(key) {
-    return this.statics.alertedObj[key].criticalPointPrice;
-  }
-  goToCoinigy(key) {
-    window.open(this.statics.alertedObj[key].coinigyURL, '_blank');
+    return this.globals.alertedObj[key].criticalPointPrice;
   }
   getTimestampStr(key) {
-    return this.statics.alertedObj[key].timestampStr;
+    return this.globals.alertedObj[key].timestampStr;
   }
   getLastAverage(key) {
-    return this.statics.alertedObj[key].lastaverage;
+    return this.globals.alertedObj[key].lastaverage;
   }
-
-  updateFromValue(fromValue) {
-    this.fromValue = parseFloat(fromValue);
-    this.calculateProfitOrLoss();
-  }
-  updateToValue(toValue) {
-    this.toValue = parseFloat(toValue);
-    this.calculateProfitOrLoss();
-  }
-  calculateProfitOrLoss() {
-    if (this.fromValue > 0 && this.toValue > 0) {
-      if (this.fromValue > this.toValue) {
-        this.calculatedProfitStr = "-%" + ((1 - (this.toValue / this.fromValue)) * 100).toFixed(1)
-      } else if (this.fromValue == this.toValue) {
-        this.calculatedProfitStr = "%0"
-      } else {
-        this.calculatedProfitStr = "+%" + (((this.toValue / this.fromValue) - 1) * 100).toFixed(1)
-      }
-    } else {
-      this.calculatedProfitStr = ""
-    }
-  }
-
-  getImageSrc(key) {
-    return "assets/" + this.statics.currencyImageMap[key]
-  }
-
   selectCurrency(key) {
-    this.statics.selectedCurrency = this.statics.alertedObj[key].name
+    this.globals.selectedCurrency = this.globals.alertedObj[key].name
   }
-
   openInBittrex(currencyName){
      window.open("https://bittrex.com/Market/Index?MarketName=BTC-" + currencyName, '_blank');
   }
-  
 }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { Statics } from './statics';
+import { Globals } from './globals';
 import { ApiService } from './api.service';
 import { QuotesComponent } from './quote.component';
 import { AlertComponent } from './alert.component';
@@ -20,7 +20,7 @@ import { AlertComponent } from './alert.component';
     FormsModule,
     HttpModule
   ],
-  providers: [Statics, ApiService],
+  providers: [Globals, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

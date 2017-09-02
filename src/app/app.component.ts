@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as socketIo from 'socket.io-client';
-import { Statics } from './statics';
+import { Globals } from './globals';
 import { CurrencyPair } from './CurrencyPair';
 import { ApiService } from './api.service';
 @Component({
@@ -9,7 +9,6 @@ import { ApiService } from './api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private statics: Statics){
-    
+  constructor(private globals: Globals){
   }
 }
